@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+<div class="col-md-10 offset-md-3">
+
+        <form>
+            {% csrf_token %}
+            <input type="text" name = "keyword" class="input-sm">
+            <button type="submit" class="btn btn-danger">Ara</button>
+        </form>
+        <h3>Makaleler</h3><hr>
+        </div></div>
+{% if articles %}
+{% for article in articles %}
+<div class="row">
+<div class="col-md-10 offset-md-3">
+
+
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+       
+        <!-- Title -->
+       <h4 class="mt-4">BAŞLIK : {{article.title}}</h4>
+        <hr>
+        <!-- Author -->
+        <p class="lead">
+          
+         <b> {{article.author.username}} </b>Tarafından  <b>{{article.created_date}}</b> Tarihinde Yayınlandı
+        </p>
+
+      
+
+        <!-- Date/Time -->
+
+        
+
+        <hr>
+
+        <!-- Post Content -->
+        <p class="lead">
+        <h4 class="mt-4">İÇERİK :</h4></br>
+            {{article.content|safe|truncatewords:20}}
+        </p>
+        <a href="{% url 'article:detail' article.id %}" class="btn btn-danger" style="float : right;">Devamını Oku..</a>
+       </br>
+        <hr>
+        
+      </div>
+</div>
+    </div>
+{% endfor %}
+{% else %}
+<div class="alert alert-danger">
+    Makale Bulunamadı
+</div>
+{% endif %}
+{% endblock body %}
